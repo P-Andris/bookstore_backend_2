@@ -25,13 +25,18 @@ class Lending extends Model
     protected $fillable = [
         'user_id',
         'copy_id',
-        'start'
+        'start',
+        'end',
+        'extension',
+        'notice'
     ];
 
-    public function copy_c()
-    {    return $this->hasOne(Copy::class, 'copy_id', 'copy_id');   }
+    public function copy_c() {
+        return $this->hasOne(Copy::class, 'copy_id', 'copy_id');
+    }
 
-    public function user_c()
-    {    return $this->hasOne(User::class, 'id', 'user_id');   }
+    public function user_c() {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 
 }

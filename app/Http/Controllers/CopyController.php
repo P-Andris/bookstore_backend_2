@@ -74,6 +74,7 @@ class CopyController extends Controller
         //copy mappában list blade
         return view('copy.list', ['copies' => $copies]);
     }
+
     //Hány darab példány van egy adott című könyvből?
     public function bookCopyCount($title){
         $copies = DB::table('copies as c')
@@ -82,7 +83,8 @@ class CopyController extends Controller
         ->count();			
         return $copies;
     }
-    //dd meg a keménykötésű példányokat szerzővel és címmel! 
+
+    //Add meg a keménykötésű példányokat szerzővel és címmel! 
     public function hardcoveredCopies($hardcovered){
         $copies = DB::table('copies as c')
         ->select('b.author', 'b.title')
@@ -132,5 +134,14 @@ class CopyController extends Controller
     public function lendingsDataWT($book){  
         $lending = Copy::with('lending_c')->where('book_id','=',$book)->get();
         return $lending;
+    }
+
+    
+    // Kilistázza az összes adatot a kapcsolatokon keresztül
+    public function listAll($ev) {
+    // public function listAll() {
+        // $copies = Copy::with('lending_c')->with('book_c')->where('book_id', '=', $id)->get();
+        $copies = Copy::with('lending_c')->with('book_c')->where('publication', '>', $ev)->get();
+        return $copies;
     }
 }

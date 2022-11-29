@@ -28,7 +28,8 @@ return new class extends Migration
 
         Copy::create(['book_id'=>2, 'publication' =>1996, 'status'=>1]);
         Copy::create(['book_id'=>3, 'status'=>1]);
-        Copy::create(['book_id'=>3, 'publication' =>2011]);
+        Copy::create(['book_id'=>3, 'publication' => 2011]);
+        Copy::create(['book_id'=>4, 'publication' => 2012]);
         Copy::create(['book_id'=>3, 'hardcovered'=> 1]);
         Copy::create(['book_id'=>3, 'status'=>2]);
         Copy::create(['book_id'=>1, 'status'=>1]);

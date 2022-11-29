@@ -7,6 +7,7 @@ use App\Models\Lending;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LendingController extends Controller
 {
@@ -32,6 +33,9 @@ class LendingController extends Controller
         $lending->user_id = $request->user_id;
         $lending->copy_id = $request->copy_id;
         $lending->start = $request->start;
+        $lending->end = $request->end;
+        $lending->extension = $request->extension;
+        $lending->notice = $request->notice;
         $lending->save();
     }
 
@@ -42,6 +46,9 @@ class LendingController extends Controller
         $lending->copy_id = $request->copy_id;
         $lending->start = $request->start;
         $lending->save();
+        $lending->end = $request->end;
+        $lending->extension = $request->extension;
+        $lending->notice = $request->notice;
     }
 
     public function userLendingsList()
@@ -65,5 +72,18 @@ class LendingController extends Controller
         $users = User::all();
         $copies = Copy::all();
         return view('lending.new', ['users' => $users, 'copies' => $copies]);
+    }
+
+    // Lekérdezések:
+    // Bejelentkezett felhasználó azon kölcsönzéseit add meg (copy_id és db), ahol egy példányt legalább db-szor (paraméteres fg) kölcsönzött ki!
+    public function lendingMin($db) {
+        $user = Auth::user();
+        $lendings = DB::table('lendings')
+        ->selectRaw('copy_id, COUNT(*) AS db')
+        ->where('user_id', '=', $user->id)
+        ->groupBy('copy_id')
+        ->having('db', '>=', $db)
+        ->get();
+        return $lendings;
     }
 }
