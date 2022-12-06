@@ -69,4 +69,11 @@ class ReservationController extends Controller
         ->count();
         return $reservation;
     }
+
+    // Admin jog!!!
+    // Törlésre ítélt rekordok törlése:
+    public function deleteOldReservs() {
+        $reservations = DB::table('reservations')->where('status', '=', 1)->delete();
+        return $reservations;
+    }
 }

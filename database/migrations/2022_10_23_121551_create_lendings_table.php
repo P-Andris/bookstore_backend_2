@@ -4,6 +4,7 @@ use App\Models\Lending;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -24,12 +25,15 @@ return new class extends Migration
             $table->tinyInteger('extension')->default(0);
             $table->integer('notice')->default(0);
             $table->timestamps();
+            
         });
+        
+        DB::statement("ALTER TABLE lendings ADD CONSTRAINT check_dates CHECK (start > '2022-12-06')");
 
-        Lending::create(['user_id'=> 2, 'copy_id' => 1, 'start'=> '2022-10-06', 'end'=>'2022-11-02', 'notice'=>1]);
-        Lending::create(['user_id'=> 3, 'copy_id' => 6, 'start'=> '2022-11-06', 'notice'=>0]);
-        Lending::create(['user_id'=> 2, 'copy_id' => 1, 'start'=> '2022-10-08', 'end'=>'2022-11-06', 'notice'=>0]);
-        Lending::create(['user_id'=> 3, 'copy_id' => 6, 'start'=> '2022-11-10', 'end'=>'2022-11-08','notice'=>1]);
+        Lending::create(['user_id'=> 2, 'copy_id' => 1, 'start'=> '2022-12-07', 'end'=>'2022-11-02', 'notice'=>1]);
+        Lending::create(['user_id'=> 3, 'copy_id' => 6, 'start'=> '2023-01-12', 'notice'=>0]);
+        Lending::create(['user_id'=> 2, 'copy_id' => 1, 'start'=> '2023-10-08', 'end'=>'2022-11-06', 'notice'=>0]);
+        Lending::create(['user_id'=> 3, 'copy_id' => 6, 'start'=> '2023-11-10', 'end'=>'2022-11-08','notice'=>1]);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
@@ -56,7 +57,7 @@ class UserController extends Controller
         $user->email = $request->email;
         //$user->password = Hash::make($request->password);
         $user->permission = $request->permission;
-        $User->save();
+        $user->save();
 
     }
 
@@ -86,5 +87,15 @@ class UserController extends Controller
         ]);
 
         return response()->json(["user" => $user]);
+    }
+
+    // Törölje azon felhasználókat, akinek nincs jelenleg kölcsönzése!
+    public function deleteUser() {
+        $users = DB::table('users')
+        ->join('lendings', 'users.id', '=', 'lendings.user_id')
+        ->selectRaw('users.id')
+        ->whereRaw('users.id NOT IN (SELECT user_id FROM lendings)')
+        ->delete();
+        return $users;
     }
 }

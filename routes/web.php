@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CopyController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\LendingController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\UserController;
 use App\Models\Copy;
+use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -73,6 +75,8 @@ Route::middleware(['auth.basic'])->group(function () {
     Route::get('/api/authors_b', [BookController::class, 'authorsB']);
     Route::get('/api/authors_start_with/{char}', [BookController::class, 'authorsStartsWith']);
     Route::get('/api/lending_min/{db}', [LendingController::class, 'lendingMin']);
+
+    Route::get('api/my_books', [LendingController::class, 'myBooks']);
 });
 
 //csak a tesztelés miatt van "kint"
@@ -98,5 +102,17 @@ Route::get('/api/list_all/{ev}', [CopyController::class, 'listAll']);
 
 // Reservation végpontok:
 Route::get('/api/reservations', [ReservationController::class, 'index']);
+
+// MailController:
+Route::get('send-mail', [MailController::class, 'index']);
+
+// Fájlfeltöltés:
+Route::get('file_upload', [FileController::class, 'index']);
+Route::post('file_upload', [FileController::class, 'store'])->name('file.store');
+
+Route::delete('/api/reserv_delete', [ReservationController::class, 'deleteOldReservs']);
+
+// Delete user
+Route::delete('api/delete_user', [UserController::class, 'deleteUser']);
 
 require __DIR__.'/auth.php';

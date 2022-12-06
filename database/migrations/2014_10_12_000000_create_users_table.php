@@ -31,6 +31,7 @@ return new class extends Migration
         User::create(['name'=>'store', 'email'=>'store@gmail.com', 'password'=> Hash::make('St123456'), 'permission'=> 0]);
         User::create(['name'=>'Marcsi', 'email'=>'student1@gmail.com', 'password'=> Hash::make('Aa123456')]);
         User::create(['name'=>'Iván', 'email'=>'student2@gmail.com', 'password'=> Hash::make('Aa123456'), 'permission' => 2]);
+        User::create(['name'=>'Sajt', 'email'=>'sajtoskeksz@gmail.com', 'password'=>Hash::make('sajt123'), 'permission' => 2]);
     }
 
     /**

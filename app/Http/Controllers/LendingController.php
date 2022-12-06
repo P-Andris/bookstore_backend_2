@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\DB;
 
 class LendingController extends Controller
 {
-    //
     public function index(){
         $lendings =  Lending::all();
         return $lendings;
@@ -85,5 +84,18 @@ class LendingController extends Controller
         ->having('db', '>=', $db)
         ->get();
         return $lendings;
+    }
+
+    // Jelenítsd meg azon könyveket, amik jelenleg nálam vannak! Cím és szerző neve kell.
+    public function myBooks() {
+        $user = Auth::user();
+        $books = DB::table('lendings')
+        ->join('copies', 'lendings.copy_id', '=', 'copies.copy_id')
+        ->join('books', 'copies.book_id', '=', 'books.book_id')
+        ->selectRaw('books.author, books.title')
+        ->where('lendings.user_id', '=', $user->id)
+        ->whereRaw('lendings.end IS NULL')
+        ->get();
+        return $books;
     }
 }
