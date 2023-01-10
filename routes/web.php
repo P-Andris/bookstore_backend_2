@@ -49,12 +49,12 @@ Route::middleware( ['admin'])->group(function () {
 
 // LIBRARIAN
 Route::middleware(['librarian'])->group(function() {
-        //books
-        Route::get('/api/books', [BookController::class, 'index']);
-        Route::get('/api/books/{id}', [BookController::class, 'show']);
-        Route::post('/api/books', [BookController::class, 'store']);
-        Route::put('/api/books/{id}', [BookController::class, 'update']);
-        Route::delete('/api/books/{id}', [BookController::class, 'destroy']);
+    //books
+    Route::get('/api/books', [BookController::class, 'index']);
+    Route::get('/api/books/{id}', [BookController::class, 'show']);
+    Route::post('/api/books', [BookController::class, 'store']);
+    Route::put('/api/books/{id}', [BookController::class, 'update']);
+    Route::delete('/api/books/{id}', [BookController::class, 'destroy']);
 });
 
 //SIMPLE USER
@@ -77,6 +77,9 @@ Route::middleware(['auth.basic'])->group(function () {
     Route::get('/api/lending_min/{db}', [LendingController::class, 'lendingMin']);
 
     Route::get('api/my_books', [LendingController::class, 'myBooks']);
+
+    // 2023.01.10.
+    Route::patch('/api/bringBack/{copy}/{start}', [LendingController::class, 'bringBack']);
 });
 
 //csak a tesztelés miatt van "kint"

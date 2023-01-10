@@ -30,10 +30,10 @@ return new class extends Migration
         
         DB::statement("ALTER TABLE lendings ADD CONSTRAINT check_dates CHECK (start > '2022-12-06')");
 
-        Lending::create(['user_id'=> 2, 'copy_id' => 1, 'start'=> '2022-12-07', 'end'=>'2022-11-02', 'notice'=>1]);
-        Lending::create(['user_id'=> 3, 'copy_id' => 6, 'start'=> '2023-01-12', 'notice'=>0]);
-        Lending::create(['user_id'=> 2, 'copy_id' => 1, 'start'=> '2023-10-08', 'end'=>'2022-11-06', 'notice'=>0]);
-        Lending::create(['user_id'=> 3, 'copy_id' => 6, 'start'=> '2023-11-10', 'end'=>'2022-11-08','notice'=>1]);
+        Lending::create(['user_id'=> 2, 'copy_id' => 1, 'start'=> '2022-12-07', 'end'=>'2023-01-01', 'notice'=>1]);
+        Lending::create(['user_id'=> 3, 'copy_id' => 6, 'start'=> '2022-12-12', 'notice'=>0]);
+        Lending::create(['user_id'=> 2, 'copy_id' => 1, 'start'=> '2022-12-20', 'end'=>'2022-12-30', 'notice'=>0]);
+        Lending::create(['user_id'=> 3, 'copy_id' => 6, 'start'=> '2022-12-24', 'end'=>'2022-12-26','notice'=>1]);
     }
 
     /**

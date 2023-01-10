@@ -44,10 +44,10 @@ class LendingController extends Controller
         $lending->user_id = $request->user_id;
         $lending->copy_id = $request->copy_id;
         $lending->start = $request->start;
-        $lending->save();
         $lending->end = $request->end;
         $lending->extension = $request->extension;
         $lending->notice = $request->notice;
+        $lending->save();
     }
 
     public function userLendingsList()
@@ -97,5 +97,18 @@ class LendingController extends Controller
         ->whereRaw('lendings.end IS NULL')
         ->get();
         return $books;
+    }
+
+
+    // 2023.01.10.
+    // Visszahozzák a könyvet (patch) - egyszerű:
+    public function bringBack($copy_id, $start) {
+        $user = Auth::user();
+        $lending = LendingController::show($user->id, $copy_id, $start);
+        $lending->end = date(now());
+        $lending->save();
+        DB::table('copies')
+        ->where('copy_id', '=', $copy_id)
+        ->update(['status' => 0]);
     }
 }

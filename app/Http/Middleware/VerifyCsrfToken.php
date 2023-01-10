@@ -23,6 +23,9 @@ class VerifyCsrfToken extends Middleware
         'api/lendings',
         'api/lendings/*/*/*',
         'api/reserv_delete',
-        'api/delete_user'
+        'api/delete_user',
+
+        // 2023.01.10.
+        'api/bringBack/*/*'
     ];
 }
